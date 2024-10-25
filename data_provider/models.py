@@ -3,7 +3,7 @@ from django.db import models
 
 class Event(models.Model):
     hotel_id = models.IntegerField()
-    room_reservation_id = models.UUIDField()
+    room_reservation_id = models.CharField(max_length=60)
     room_id = models.IntegerField()
     rpg_status = models.IntegerField()
     night_of_stay = models.DateField()
