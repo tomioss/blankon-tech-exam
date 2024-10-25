@@ -1,11 +1,13 @@
-
 from django.urls import path
+from rest_framework.routers import DefaultRouter
+
 from data_provider.views import EventApiView
 
 
 app_name = "data_provider"
 
-urlpatterns = [
-    path("events/", EventApiView.as_view(), name="events"),
-]
+router = DefaultRouter()
+router.register("events", EventApiView, basename='events')
+
+urlpatterns = router.urls
 

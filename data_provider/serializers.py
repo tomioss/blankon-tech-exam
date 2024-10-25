@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Event
 
 
-class EventSerializer(serializers.Serializer):
+class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
@@ -15,4 +15,11 @@ class EventSerializer(serializers.Serializer):
             "room_id",
             "night_of_stay",
         )
+
+
+class EventCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Event
+        fields = "__all__"
 
