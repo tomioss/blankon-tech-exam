@@ -9,10 +9,11 @@ def get_data_provider_events():
 
     while True:
         result = retrieve_data_provider(start_time, end_time, page)
-        data = result.json()
 
-        if "detail" in data and data["detail"] == "Invalid page.":
+        if result.status_code != 200:
             break
+
+        data = result.json()
 
         if "results" in data:
             save_booking_events(data["results"])
