@@ -1,7 +1,9 @@
+from celery import shared_task
 
 from dashboard_service.services import retrieve_data_provider, save_booking_events
 
 
+@shared_task
 def get_data_provider_events():
     start_time = "2022-01-01"
     end_time = "2022-01-31"

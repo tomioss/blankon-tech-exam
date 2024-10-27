@@ -49,7 +49,8 @@ def retrieve_data_provider(start_time, end_time, page):
         "hotel_id": 2607,
         "updated_gte": start_time,
         "updated_lte": end_time,
-        "page": page
+        "page": page,
+        "rpg_status": "2"
     }
 
     result = requests.get(url, params=params)

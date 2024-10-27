@@ -15,4 +15,5 @@ __pycache__
 data.csv
 db.sqlite3
 */migrations
+.env
 
