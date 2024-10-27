@@ -13,3 +13,6 @@ __pycache__
 *.sublime-workspace
 
 data.csv
+db.sqlite3
+*/migrations
+
