@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import BookingEvent
+from dashboard_service.models import BookingEvent
 
 
 class BookingEventAdmin(admin.ModelAdmin):

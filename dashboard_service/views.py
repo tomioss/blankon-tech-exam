@@ -3,6 +3,7 @@ from rest_framework.response import Response
 
 from dashboard_service.serializers import DashboardApiSerializer
 from dashboard_service.services import send_bookings
+from dashboard_service.tasks import get_data_provider_events
 
 
 class DashboardApiView(viewsets.ViewSet):
@@ -20,6 +21,17 @@ class SendBookingApiView(viewsets.ViewSet):
     def create(self, request):
         try:
             send_bookings()
+
+            return Response({"status": "ok"})
+        except Exception as e:
+            return Response({"status": "error", "message": str(e)})
+
+
+class ViewBookingApiView(viewsets.ViewSet):
+
+    def list(self, request):
+        try:
+            get_data_provider_events()
 
             return Response({"status": "ok"})
         except Exception as e:
