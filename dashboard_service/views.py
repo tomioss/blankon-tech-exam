@@ -18,7 +18,11 @@ class DashboardApiView(viewsets.ViewSet):
 class SendBookingApiView(viewsets.ViewSet):
 
     def create(self, request):
-        send_bookings()
+        try:
+            send_bookings()
 
-        return Response({})
+            return Response({"status": "ok"})
+        except Exception as e:
+            return Response({"status": "error", "message": str(e)})
+
 
