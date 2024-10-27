@@ -2,6 +2,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from dashboard_service.serializers import DashboardApiSerializer
+from dashboard_service.services import send_bookings
+
 
 class DashboardApiView(viewsets.ViewSet):
 
@@ -11,4 +13,12 @@ class DashboardApiView(viewsets.ViewSet):
         serializer = DashboardApiSerializer({"num_of_bookings": num_of_bookings})
 
         return Response(serializer.data)
+
+
+class SendBookingApiView(viewsets.ViewSet):
+
+    def create(self, request):
+        send_bookings()
+
+        return Response({})
 

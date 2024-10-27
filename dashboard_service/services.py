@@ -1,22 +1,23 @@
 import csv
 import requests
 
+from django.conf import settings
+
 
 def read_csv(path):
     data = []
 
     with open(path, mode="r") as file:
-        csvFile = csv.reader(file)
+        csvFile = csv.DictReader(file)
 
         for lines in csvFile:
-            print(lines)
             line_data = {
-                "booking_id": "",
-                "hotel_id": "",
-                "room_id": "",
-                "rpg_status": "",
-                "night_of_stay": "",
-                "timestamp": "",
+                "booking_id": lines["id"],
+                "hotel_id": lines["hotel_id"],
+                "room_id": lines["room_reservation_id"],
+                "rpg_status": lines["status"],
+                "night_of_stay": lines["night_of_stay"],
+                "timestamp": lines["event_timestamp"],
             }
             data.append(line_data)
 
@@ -24,9 +25,18 @@ def read_csv(path):
 
 
 def save_to_data_provider(data):
-    url = ""
+    url = settings.DATA_PROVIDER_URL
 
     result = requests.post(url, data)
 
     return result
+
+
+def send_bookings():
+    path = settings.DATA_CSV
+
+    data = read_csv(path)
+
+    for line_data in data:
+        save_to_data_provider(line_data)
 

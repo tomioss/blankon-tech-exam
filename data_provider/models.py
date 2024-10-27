@@ -7,6 +7,7 @@ class Event(models.Model):
     room_id = models.CharField(max_length=60)
     rpg_status = models.IntegerField()
     night_of_stay = models.DateField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
