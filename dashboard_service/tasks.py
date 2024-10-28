@@ -4,6 +4,11 @@ from dashboard_service.services import retrieve_data_provider, save_booking_even
 
 
 @shared_task
+def hello_task():
+    return "Hello!"
+
+
+@shared_task
 def get_data_provider_events():
     start_time = "2022-01-01"
     end_time = "2022-01-31"

@@ -20,6 +20,22 @@ services:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=backend_db
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+    command: celery -A app worker -l INFO
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
+    depends_on:
+      - backend
+      - redis
+
 volumes:
   db_data:
 
