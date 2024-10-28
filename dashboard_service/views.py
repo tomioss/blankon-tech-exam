@@ -23,7 +23,19 @@ class SendBookingApiView(viewsets.ViewSet):
 
     def create(self, request):
         try:
-            send_bookings()
+            hotel_id = request.GET.get("hotel_id", None)
+            room_reservation_id = request.GET.get("room_reservation_id", None)
+
+            params = {}
+            if hotel_id:
+                params["hotel_id"] = hotel_id
+            if room_reservation_id:
+                params["room_reservation_id"] = room_reservation_id
+
+            if not params:
+                send_bookings()
+            else:
+                send_bookings(params)
 
             return Response({"status": "ok"})
         except Exception as e:

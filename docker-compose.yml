@@ -36,6 +36,17 @@ services:
       - backend
       - redis
 
+  celery-beat:
+    build: .
+    command: celery -A app beat -l INFO
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
+    depends_on:
+      - backend
+      - redis
+
 volumes:
   db_data:
 

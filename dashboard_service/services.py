@@ -6,7 +6,7 @@ from django.conf import settings
 from dashboard_service.models import BookingEvent
 
 
-def read_csv(path):
+def read_csv(path, params=None):
     data = []
 
     with open(path, mode="r") as file:
@@ -21,7 +21,14 @@ def read_csv(path):
                 "night_of_stay": lines["night_of_stay"],
                 "timestamp": lines["event_timestamp"],
             }
-            data.append(line_data)
+
+            if params:
+                if "hotel_id" in params and params["hotel_id"] == lines["hotel_id"]:
+                    data.append(line_data)
+                if "room_reservation_id" in params and params["room_reservation_id"] == lines["room_reservation_id"]:
+                    data.append(line_data)
+            else:
+                data.append(line_data)
 
     return data
 
@@ -34,23 +41,24 @@ def save_to_data_provider(data):
     return result
 
 
-def send_bookings():
+def send_bookings(params=None):
     path = settings.DATA_CSV
 
-    data = read_csv(path)
+    data = read_csv(path, params)
 
     for line_data in data:
-        save_to_data_provider(line_data)
+        result = save_to_data_provider(line_data)
+
+        if result.status_code != 201:
+            break
 
 
 def retrieve_data_provider(start_time, end_time, page):
     url = settings.DATA_PROVIDER_URL
     params = {
-        "hotel_id": 2607,
         "updated_gte": start_time,
         "updated_lte": end_time,
         "page": page,
-        "rpg_status": "2"
     }
 
     result = requests.get(url, params=params)

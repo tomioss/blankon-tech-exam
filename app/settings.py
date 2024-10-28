@@ -138,8 +138,8 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-DATA_PROVIDER_URL = "http://localhost:8000/events/"
-DATA_CSV = BASE_DIR / "data.csv"
+DATA_PROVIDER_URL = os.environ.get("DATA_PROVIDER_URL")
+DATA_CSV = BASE_DIR / os.environ.get("DATA_CSV_NAME")
 
 # Celery
 CELERY_TIMEZONE = TIME_ZONE
