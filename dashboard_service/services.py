@@ -62,6 +62,10 @@ def save_booking_events(json_data):
     booking_events = []
 
     for data in json_data:
+        be = BookingEvent.objects.filter(booking_id=data["booking_id"])
+        if be:
+            continue
+
         booking_events.append(BookingEvent(
             booking_id=data["booking_id"],
             hotel_id=data["hotel_id"],
@@ -72,4 +76,22 @@ def save_booking_events(json_data):
         ))
 
     return BookingEvent.objects.bulk_create(booking_events)
+
+
+
+def get_data_provider_and_save_events(start_time, end_time):
+    page = 1
+
+    while True:
+        result = retrieve_data_provider(start_time, end_time, page)
+
+        if result.status_code != 200:
+            break
+
+        data = result.json()
+
+        if "results" in data:
+            save_booking_events(data["results"])
+
+        page += 1
 

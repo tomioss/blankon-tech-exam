@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from dashboard_service.filters import BookingEventFilter
 from dashboard_service.models import BookingEvent
 from dashboard_service.serializers import DashboardApiSerializer
-from dashboard_service.services import send_bookings
-from dashboard_service.tasks import get_data_provider_events
+from dashboard_service.services import get_data_provider_and_save_events, send_bookings
+from dashboard_service.utils import get_date_time_today
 
 
 class DashboardApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -34,7 +34,11 @@ class ViewBookingApiView(viewsets.ViewSet):
 
     def list(self, request):
         try:
-            get_data_provider_events()
+            default_start_time, default_end_time = get_date_time_today()
+            start_time = request.GET.get("start_time", default_start_time)
+            end_time = request.GET.get("end_time", default_end_time)
+
+            get_data_provider_and_save_events(start_time, end_time)
 
             return Response({"status": "ok"})
         except Exception as e:
