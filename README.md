@@ -32,3 +32,8 @@ docker compose run --rm backend python manage.py shell
 docker compose run --rm backend python manage.py test --keepdb
 ```
 
+### Local Testing
+```
+crontab(minute='*/1')
+```
+
