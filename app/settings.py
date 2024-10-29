@@ -155,3 +155,6 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
+API_USER = os.environ.get("API_USER")
+API_PASS = os.environ.get("API_PASS")
+

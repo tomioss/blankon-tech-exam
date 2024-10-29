@@ -36,7 +36,7 @@ def read_csv(path, params=None):
 def save_to_data_provider(data):
     url = settings.DATA_PROVIDER_URL
 
-    result = requests.post(url, data)
+    result = requests.post(url, auth=(settings.API_USER, settings.API_PASS), data=data)
 
     return result
 
@@ -61,7 +61,7 @@ def retrieve_data_provider(start_time, end_time, page):
         "page": page,
     }
 
-    result = requests.get(url, params=params)
+    result = requests.get(url, auth=(settings.API_USER, settings.API_PASS), params=params)
 
     return result
 
@@ -70,10 +70,6 @@ def save_booking_events(json_data):
     booking_events = []
 
     for data in json_data:
-        be = BookingEvent.objects.filter(booking_id=data["booking_id"])
-        if be:
-            continue
-
         booking_events.append(BookingEvent(
             booking_id=data["booking_id"],
             hotel_id=data["hotel_id"],

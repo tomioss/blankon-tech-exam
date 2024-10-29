@@ -1,7 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import mixins, viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from dashboard_service.filters import BookingEventFilter
@@ -12,7 +12,7 @@ from dashboard_service.utils import get_date_time_today
 
 
 class DashboardApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     queryset = BookingEvent.objects.all().order_by("timestamp")
     serializer_class = DashboardApiSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -20,6 +20,7 @@ class DashboardApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class SendBookingApiView(viewsets.ViewSet):
+    permission_classes = (IsAuthenticated,)
 
     def create(self, request):
         try:
@@ -43,6 +44,7 @@ class SendBookingApiView(viewsets.ViewSet):
 
 
 class ViewBookingApiView(viewsets.ViewSet):
+    permission_classes = (IsAuthenticated,)
 
     def list(self, request):
         try:

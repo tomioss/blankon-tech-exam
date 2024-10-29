@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 
@@ -20,11 +21,25 @@ def create_booking_event(room_id, booking_id=1, night_of_stay=date.today()):
     )
 
 
+def create_user(username, password):
+    user = User.objects.create_user(username)
+    user.set_password(password)
+    user.save()
+
+
 class DashboardApiViewTest(APITestCase):
     url = reverse("dashboard_service:dashboard-list")
 
+    def _login_user(self):
+        username = "username"
+        password = "password"
+        create_user(username, password)
+        self.assertTrue(self.client.login(username=username, password=password))
+
     def setUp(self):
         create_booking_event("1")
+
+        self._login_user()
 
     def test_list(self):
         response = self.client.get(self.url)

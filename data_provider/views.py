@@ -1,7 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import mixins, viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 
 from data_provider.filters import EventFilter
 from data_provider.models import Event
@@ -9,7 +9,7 @@ from data_provider.serializers import EventCreateSerializer, EventSerializer
 
 
 class EventApiView(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     queryset = Event.objects.all().order_by("timestamp")
     serializer_class = EventSerializer
     filter_backends = (DjangoFilterBackend,)
