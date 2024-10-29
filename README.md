@@ -3,6 +3,7 @@
 ### Installation
 Run `docker compose up`  
 Run `docker compose run --rm backend python manage.py migrate`  
+Run `docker compose run --rm backend python manage.py createsuperuser`  
 
 ### API Endpoints
 POST and GET localhost:8000/events/  
