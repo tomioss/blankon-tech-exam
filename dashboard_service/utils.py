@@ -1,6 +1,8 @@
 from datetime import datetime
 from uuid import uuid4
 
+from django.utils import timezone
+
 
 def get_date_time_today():
     now = datetime.now()
@@ -10,7 +12,7 @@ def get_date_time_today():
 
 def get_booking_data():
     room_id_1 = str(uuid4())
-    time_now = datetime.now()
+    time_now = timezone.now()
     return [
         {
             "booking_id": 1,
