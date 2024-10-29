@@ -7,6 +7,9 @@ Run `docker compose run --rm backend python manage.py migrate`
 Run `docker compose run --rm backend python manage.py createsuperuser`  
 
 ### API Endpoints
+Swagger UI  
+GET localhost:8000/schema/swagger-ui/
+
 POST and GET localhost:8000/events/  
 GET localhost:8000/dashboard/
 
