@@ -1,6 +1,7 @@
 # blankon-tech-exam
 
-### Installation
+## Installation
+Create `.env` from `.env.dev` and edit the values if needed  
 Run `docker compose up`  
 Run `docker compose run --rm backend python manage.py migrate`  
 Run `docker compose run --rm backend python manage.py createsuperuser`  
